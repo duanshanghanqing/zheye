@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown">
+  <div class="dropdown" ref="dropdownRef">
     <a
       class="btn btn-primary dropdown-toggle"
       href="#"
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 import _DropdownItem from './DropdownItem/index.vue';
 export const DropdownItem = _DropdownItem;
 
@@ -41,9 +41,27 @@ export default defineComponent({
     const toggleOpen = () => {
         isOpen.value = !isOpen.value;
     }
+
+    const dropdownRef = ref<null | HTMLElement>(null);
+    const handler = (e: MouseEvent) => {
+      // 拿到dom节点
+      if (dropdownRef.value) {
+        // 判断点击的节点是否包含当前组件内，在就不处理，不再就关闭
+        if (!dropdownRef.value.contains(e.target as HTMLElement) && isOpen) { // 点击的html元素不在当前组件内，并且菜单展开
+          isOpen.value = false;
+        }
+      }
+    } 
+    onMounted(() => {
+      document.addEventListener('click', handler);
+    });
+    onUnmounted(() => {
+      document.removeEventListener('click', handler);
+    });
     return {
       isOpen,
-      toggleOpen
+      toggleOpen,
+      dropdownRef, // 这里返回要和上面html定义的ref一样
     };
   },
 });
