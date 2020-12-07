@@ -25,8 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue"; // onMounted, onUnmounted
-import _DropdownItem from "./DropdownItem/index.vue";
-export const DropdownItem = _DropdownItem;
+export { default as DropdownItem } from "./DropdownItem/index.vue";
 import useClickOutside from "../../hooks/useClickOutside/index";
 
 export default defineComponent({
