@@ -1,10 +1,10 @@
 <template>
-  <div class="dropdown" ref="dropdownRef">
+  <div ref="dropdownRef" class="dropdown">
     <a
+      id="dropdownMenuLink"
       class="btn btn-primary dropdown-toggle"
       href="#"
       role="button"
-      id="dropdownMenuLink"
       data-toggle="dropdown"
       aria-haspopup="true"
       aria-expanded="false"
@@ -13,43 +13,43 @@
       Dropdown link
     </a>
     <ul
+      v-if="isOpen"
       class="dropdown-menu"
       aria-labelledby="dropdownMenuLink"
       style="display: block"
-      v-if="isOpen"
     >
-      <slot></slot>
+      <slot />
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue"; // onMounted, onUnmounted
-export { default as DropdownItem } from "./DropdownItem/index.vue";
-import useClickOutside from "../../hooks/useClickOutside/index";
+import { defineComponent, ref, watch } from 'vue'
+import useClickOutside from '../../hooks/useClickOutside/index' // onMounted, onUnmounted
+export { default as DropdownItem } from './DropdownItem/index.vue'
 
 export default defineComponent({
-  name: "Dropdown",
+  name: 'Dropdown',
   props: {
     title: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
-  setup() {
-    const isOpen = ref(false);
+  setup () {
+    const isOpen = ref(false)
     const toggleOpen = () => {
-      isOpen.value = !isOpen.value;
-    };
+      isOpen.value = !isOpen.value
+    }
 
-    const dropdownRef = ref<null | HTMLElement>(null);
-    const isClickOutside = useClickOutside(dropdownRef);
+    const dropdownRef = ref < null | HTMLElement > (null)
+    const isClickOutside = useClickOutside(dropdownRef)
     watch(isClickOutside, () => { // 因为 hooks 返回的是个响应式对象
       // 点击的区域不再组件内，并且默认展开
       if (!isClickOutside.value && isOpen.value) {
-        isOpen.value = false;
+        isOpen.value = false
       }
-    });
+    })
 
     // const handler = (e: MouseEvent) => {
     //   // 拿到dom节点
@@ -69,10 +69,10 @@ export default defineComponent({
     return {
       isOpen,
       toggleOpen,
-      dropdownRef, // 这里返回要和上面html定义的ref一样
-    };
-  },
-});
+      dropdownRef // 这里返回要和上面html定义的ref一样
+    }
+  }
+})
 </script>
 
 <style>

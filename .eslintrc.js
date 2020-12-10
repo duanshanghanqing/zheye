@@ -1,11 +1,22 @@
 module.exports = {
-    extends: [
-        'standard-vue-ts'
-    ],
-    // 如果你还需要检测 ts 文件则添加该项，并且保证根目录有 tsconfig.json 文件
-    parserOptions: {
-        project: './tsconfig.json'
+    "env": {
+        "browser": true,
+        "es6": true
     },
-    rules: {
+    "extends": "plugin:vue/essential",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "parser": "@typescript-eslint/parser",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "vue",
+        "@typescript-eslint"
+    ],
+    "rules": {
     }
-}
+};
