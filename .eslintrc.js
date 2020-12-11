@@ -17,6 +17,7 @@ module.exports = {
         "vue",
         "@typescript-eslint"
     ],
-    "rules": {
+    "rules": { 
+        "quotes": [2, "single", { "avoidEscape": true }]
     }
 };

@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType } from 'vue';
 import Dropdown, { DropdownItem } from '../Dropdown/index.vue';
 export interface UserProps {
   isLogin: boolean;
@@ -44,7 +44,7 @@ export interface UserProps {
 }
 
 export default defineComponent({
-  name: "GlobalHeader",
+  name: 'GlobalHeader',
   props: {
     user: {
       type: Object as PropType<UserProps>,
