@@ -1,5 +1,4 @@
 <template>
-  <form>
     <div class="mb-3">
       <label class="form-label">邮箱地址</label>
       <input
@@ -12,20 +11,23 @@
         {{ emailRef.message }}
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, PropType } from 'vue';
+
+const emailReg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+
+interface RuleProp {
+  type: 'required' | 'email';
+  message: string;
+}
+
+export type RulesProp = RuleProp[];
 
 export default defineComponent({
-  name: 'Form',
   props: {
-    title: {
-      type: String,
-      required: true,
-    },
+    rules: Array as PropType<RulesProp>,
   },
   setup() {
     const emailRef = reactive({
@@ -44,9 +46,12 @@ export default defineComponent({
       }
     };
     return {
-      emailRef,
-      validataEmail,
-    };
+        emailRef,
+        validataEmail,
+    }
   },
 });
 </script>
+
+<style>
+</style>
