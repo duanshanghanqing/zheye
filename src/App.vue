@@ -17,7 +17,10 @@
         v-model="formValue.passwordValue"
         placeholder="请输入"
       />
-      <button type="button" class="btn btn-primary">提交</button>
+      <!-- 使用 具名插槽 -->
+      <template v-slot:submit>
+        <button type="submit" class="btn btn-primary">提交</button>
+      </template>
     </validate-form>
   </div>
 </template>
@@ -28,7 +31,9 @@ import { defineComponent, ref, computed, reactive } from 'vue';
 import GlobalHeader, { UserProps } from './components/GlobalHeader/index.vue';
 import ColumnList, { ColumnProps } from './components/ColumnList/index.vue';
 import ValidateForm from './components/ValidateForm/index.vue';
-import ValidateInput, { RulesProp } from './components/ValidateForm/ValidateInput/index.vue';
+import ValidateInput, {
+  RulesProp,
+} from './components/ValidateForm/ValidateInput/index.vue';
 
 const currentUser: UserProps = {
   isLogin: true,
@@ -88,8 +93,8 @@ export default defineComponent({
       },
     ];
     const onFormSubmit = (result: boolean) => {
-        console.log('result', result);
-    }
+      console.log('result', result);
+    };
     return {
       list,
       currentUser,
