@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { defineComponent, ref, computed } from 'vue';
 import GlobalHeader, { UserProps } from './components/GlobalHeader/index.vue';
 import ColumnList, { ColumnProps } from './components/ColumnList/index.vue';
-import GlobalForm from './components/GlobalForm/index.vue';
+import GlobalForm from './components/GlobalForm/test.vue';
 
 const currentUser: UserProps = {
     isLogin: true,
