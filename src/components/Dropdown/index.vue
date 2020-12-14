@@ -24,9 +24,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
-import useClickOutside from '../../hooks/useClickOutside/index' // onMounted, onUnmounted
-export { default as DropdownItem } from './DropdownItem/index.vue'
+import { defineComponent, ref, watch } from 'vue';
+import useClickOutside from '../../hooks/useClickOutside/index'; // onMounted, onUnmounted
+export { default as DropdownItem } from './DropdownItem/index.vue';
 
 export default defineComponent({
   name: 'Dropdown',
