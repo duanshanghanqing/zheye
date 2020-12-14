@@ -9,7 +9,9 @@
         :value="inputRef.val"
         @blur="validata"
         @input="upDataValue"
+        v-bind="$attrs"
       />
+      <!-- b. v-bind="$attrs": 结束属性上html原始属性 -->
       <div class="invalid-feedback" v-if="inputRef.error">
         {{ inputRef.message }}
       </div>
@@ -37,6 +39,7 @@ export default defineComponent({
     rules: Array as PropType<RulesProp>,
     modelValue: String, // 1.要有一个 modelValue 属性
   },
+  inheritAttrs: false,// a.不希望根节点继承传入的属性
   setup(props, context) {// 发送事件 context
     const inputRef = reactive({
       val: props.modelValue || '', // 设置默认值
