@@ -1,22 +1,24 @@
 <template>
     <div class="mb-3">
-      <label class="form-label">邮箱地址</label>
+      <label class="form-label">{{ label }}</label>
+      <!-- 2.使用手动更新 -->
       <input
-        type="email"
+        type="text"
         class="form-control"
-        v-model="emailRef.val"
-        @blur="validataEmail"
+        :class="{'is-invalid': inputRef.error}"
+        :value="inputRef.val"
+        @blur="validata"
+        @input="upDataValue"
       />
-      <div class="form-text" v-if="emailRef.error">
-        {{ emailRef.message }}
+      <div class="invalid-feedback" v-if="inputRef.error">
+        {{ inputRef.message }}
       </div>
     </div>
 </template>
 
 <script lang="ts">
+// https://getbootstrap.net/docs/components/forms/#server-side
 import { defineComponent, reactive, PropType } from 'vue';
-
-const emailReg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
 
 interface RuleProp {
   type: 'required' | 'email';
@@ -27,27 +29,52 @@ export type RulesProp = RuleProp[];
 
 export default defineComponent({
   props: {
+    label: {
+        type: String,
+        // default: '',
+        required: true
+    },
     rules: Array as PropType<RulesProp>,
+    modelValue: String, // 1.要有一个 modelValue 属性
   },
-  setup() {
-    const emailRef = reactive({
-      val: '',
+  setup(props, context) {// 发送事件 context
+    const inputRef = reactive({
+      val: props.modelValue || '', // 设置默认值
       error: false,
       message: '',
     });
-    const validataEmail = () => {
-      const emailReg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-      if (emailRef.val.trim() === '') {
-        emailRef.error = true;
-        emailRef.message = '不能为空';
-      } else if (!emailReg.test(emailRef.val)) {
-        emailRef.error = true;
-        emailRef.message = '不是合法的邮箱';
-      }
+    const validata = () => {
+        if (props.rules) {
+            const allError = props.rules.every(rule => {// 有一个为false结果就为false
+                let error = true;
+                inputRef.message = rule.message;
+                switch(rule.type) {
+                    case 'required':
+                        error = inputRef.val.trim() !== '';
+                        break;
+                    case 'email':
+                        const emailReg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                        error = emailReg.test(inputRef.val);
+                        break;
+                    default:
+                        break;
+                }
+                return error;
+            });
+            inputRef.error = !allError;
+        }
+    };
+    const upDataValue = (e: KeyboardEvent) => {
+        const targetValue = (e.target as HTMLInputElement).value;
+        // 更新组件内部表单的值
+        inputRef.val = targetValue;
+        // 发射事件，通知外部
+        context.emit('update:modelValue', targetValue); // 3.更新某个属性值
     };
     return {
-        emailRef,
-        validataEmail,
+        inputRef,
+        validata,
+        upDataValue,
     }
   },
 });

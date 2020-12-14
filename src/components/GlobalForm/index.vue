@@ -1,52 +1,39 @@
 <template>
-  <form>
-    <div class="mb-3">
-      <label class="form-label">邮箱地址</label>
-      <input
-        type="email"
-        class="form-control"
-        v-model="emailRef.val"
-        @blur="validataEmail"
-      />
-      <div class="form-text" v-if="emailRef.error">
-        {{ emailRef.message }}
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+    <form>
+        <validate-input label="邮箱地址" :rules="emailRules" v-model="formValue.emailValue" />
+        <div>{{ formValue.emailValue }}</div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
+import ValidateInput, { RulesProp } from './ValidateInput/index.vue';
 
 export default defineComponent({
-  name: 'Form',
-  props: {
-    title: {
-      type: String,
-      required: true,
+    name: 'Form',
+    setup() {
+        const formValue = reactive({
+            emailValue: ''
+        })
+
+        const emailRules: RulesProp = [
+            {
+                type: 'required',
+                message: '电子邮箱不能为空',
+            },
+            {
+                type: 'email',
+                message: '请输入正确的电子邮箱格式',
+            },
+        ];
+        return {
+            formValue,
+            emailRules,
+        };
     },
-  },
-  setup() {
-    const emailRef = reactive({
-      val: '',
-      error: false,
-      message: '',
-    });
-    const validataEmail = () => {
-      const emailReg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-      if (emailRef.val.trim() === '') {
-        emailRef.error = true;
-        emailRef.message = '不能为空';
-      } else if (!emailReg.test(emailRef.val)) {
-        emailRef.error = true;
-        emailRef.message = '不是合法的邮箱';
-      }
-    };
-    return {
-      emailRef,
-      validataEmail,
-    };
-  },
+    components: {
+        ValidateInput,
+    },
 });
 </script>
