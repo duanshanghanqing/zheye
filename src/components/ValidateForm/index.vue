@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onUnmounted } from 'vue';
+import { emitter } from './mitt'; 
 
 export { default as ValidateInput } from './ValidateInput/index.vue';
 
@@ -19,6 +20,15 @@ export default defineComponent({
         const submitForm = () => {
             context.emit('form-submit', true);// 触发父组件事件
         };
+
+        const callback = (e) => {
+            console.log('foo', e);
+        }
+        emitter.on('form-item-created', callback);
+        // 卸载组件，移除事件
+        onUnmounted(() => {
+            emitter.off('form-item-created', callback);
+        });
         return {
             submitForm,
         }

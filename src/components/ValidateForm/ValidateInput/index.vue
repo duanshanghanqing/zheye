@@ -21,6 +21,7 @@
 <script lang="ts">
 // https://getbootstrap.net/docs/components/forms/#server-side
 import { defineComponent, reactive, PropType } from 'vue';
+import { emitter } from '../mitt';
 
 interface RuleProp {
   type: 'required' | 'email';
