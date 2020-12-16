@@ -7,7 +7,7 @@
         class="form-control"
         :class="{'is-invalid': inputRef.error}"
         :value="inputRef.val"
-        @blur="validata"
+        @blur="validataInput"
         @input="upDataValue"
         v-bind="$attrs"
       />
@@ -20,7 +20,7 @@
 
 <script lang="ts">
 // https://getbootstrap.net/docs/components/forms/#server-side
-import { defineComponent, reactive, PropType } from 'vue';
+import { defineComponent, reactive, PropType, onMounted } from 'vue';
 import { emitter } from '../mitt';
 
 interface RuleProp {
@@ -47,7 +47,7 @@ export default defineComponent({
       error: false,
       message: '',
     });
-    const validata = () => {
+    const validataInput = () => {
         if (props.rules) {
             const allError = props.rules.every(rule => {// 有一个为false结果就为false
                 let error = true;
@@ -65,8 +65,10 @@ export default defineComponent({
                 }
                 return error;
             });
-            inputRef.error = !allError;
+            inputRef.error = !allError; // 取反表示有错误，好展示错误
+            return allError; // 返回结果
         }
+        return true;
     };
     const upDataValue = (e: KeyboardEvent) => {
         const targetValue = (e.target as HTMLInputElement).value;
@@ -75,9 +77,12 @@ export default defineComponent({
         // 发射事件，通知外部
         context.emit('update:modelValue', targetValue); // 3.更新某个属性值
     };
+    onMounted(() => {
+        emitter.emit('form-item-created', validataInput);
+    });
     return {
         inputRef,
-        validata,
+        validataInput,
         upDataValue,
     }
   },

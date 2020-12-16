@@ -42,7 +42,8 @@
         "axios": "^0.21.0",
         "bootstrap": "^5.0.0-alpha3",
         "mitt": "^2.1.0",
-        "vue": "^3.0.2"
+        "vue": "^3.0.2",
+        "vue-router": "^4.0.1"
     },
     "husky": {
         "hooks": {
