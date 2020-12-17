@@ -28,3 +28,7 @@ const store = createStore<StoreState>({
 // console.log('count', store.state.count);
 
 export default store;
+
+// store.dispatch -> action -commit-> mutations
+
+// await new Promise(resolve => setTimeout(resolve, 3000));

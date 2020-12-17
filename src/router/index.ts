@@ -8,4 +8,12 @@ const router = createRouter({
     routes,
 });
 
+// 全局路由拦截器
+// https://next.router.vuejs.org/api/#type
+router.beforeEach((to, from, next) => {
+    console.log('to', to);
+    console.log('from', from);
+    next(); // 允许跳转
+});
+
 export default router;
