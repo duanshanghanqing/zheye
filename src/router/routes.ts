@@ -1,7 +1,9 @@
 import Home from '../view/Home/index.vue';
 import Login from '../view/Login/index.vue';
+import ColumnDetail from '../view/ColumnDetail/index.vue';
 
 export default [
-    { path: '/', component: Home },
-    { path: '/login', component: Login },
+    { path: '/', name: 'home', component: Home },
+    { path: '/login', name: 'login', component: Login },
+    { path: '/columnDetail', name: 'columnDetail', component: ColumnDetail },
 ];

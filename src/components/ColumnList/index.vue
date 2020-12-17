@@ -8,7 +8,8 @@
           <p class="card-text text-left">
             {{ item.description }}
           </p>
-          <a href="#" class="btn btn-outline-primary">进入专栏</a>
+          <!-- <router-link :to="{ name: 'columnDetail' }" class="btn btn-outline-primary">进入专栏</router-link> -->
+          <router-link :to="`/columnDetail`" class="btn btn-outline-primary">进入专栏</router-link>
         </div>
       </div>
     </div>
@@ -17,6 +18,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
+import { useRouter } from 'vue-router';
 
 export interface ColumnProps {
   id: number;
@@ -35,6 +37,9 @@ export default defineComponent({
     },
   },
   setup(props) {
+    // const router = useRouter();
+    // router.push(`/columnDetail`); // 跳转路由
+
     // 计算属性
     const columnList = computed(() => {
       return props.list.map((column) => {
