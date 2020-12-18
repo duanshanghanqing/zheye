@@ -10,11 +10,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { defineComponent, ref, computed, reactive } from 'vue';
 import GlobalHeader, { UserProps } from './components/GlobalHeader/index.vue';
 
-
-
 const currentUser: UserProps = {
   isLogin: false,
-  nickName: 'xxx',
+  nickName: 'xxx123',
 };
 
 
