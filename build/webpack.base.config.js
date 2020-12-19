@@ -6,7 +6,7 @@ module.exports = {
     entry: path.join(__dirname, '..', 'src', 'main'),
     output: {
         path: path.join(__dirname, '..', 'dist'),
-        publicPath: './', // 这里要改成相对路径。因为能使静态资源相对页面加载
+        publicPath: '/', // 这里要改成相对路径。因为能使静态资源相对页面加载
         filename: 'js/bundle-[hash].js'
     },
     module: {

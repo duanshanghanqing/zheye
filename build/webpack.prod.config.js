@@ -9,6 +9,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin'); //用于在构�
 module.exports = merge(webpackbaseconfig, {
     devtool: 'source-map',
     mode: 'production',
+    output: {
+        publicPath: './', // 这里要改成相对路径。因为能使静态资源相对页面加载
+    },
     module: {
         rules: [
             {
